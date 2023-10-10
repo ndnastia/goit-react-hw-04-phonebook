@@ -1,43 +1,42 @@
-import React, { Component } from 'react';
+import React, { useState} from 'react';
 import style from "./ContactForm.module.css";
 
 
-export default class ContactForm extends Component {
-    state = {
-        name: '',
-        number: '',
-    }
-
-    handleInputChange = event => {
-        this.setState({
-        [event.target.name]: event.target.value,
-    });
-    }
-
-    handleSubmit = event => {
-        event.preventDefault();
-       const { name, number } = this.state;
-       this.props.onSubmit(name, number);
+export const ContactForm = ({onSubmit}) => {
     
-        this.setState({
-            name: "",
-            number: "",
-        })
+    const [name, setName] = useState('');
+    const [number, setNumber] = useState('');
+
+    const handleInputChangeName = event => {
+        setName(event.target.value);  
+    }
+     const handleInputChangeNumber = event => {
+        setNumber(event.target.value);
         
     }
 
-    render() {
+
+    const handleSubmit = event => {
+        event.preventDefault();
+        onSubmit(name, number);
+    //    onSubmit(name, number)={onSubmit};
+        setName('');
+        setNumber('');
+       
+    }
+
+    
         return (
             <div className={style['contact-container']}>
-            <form onSubmit={this.handleSubmit}> 
+            <form onSubmit={handleSubmit}> 
                 <h2>Name</h2>
                 <label>
-                    <input onChange={this.handleInputChange} value={this.state.name} type="text" name="name" required />
+                    <input onChange={handleInputChangeName} value={name} type="text" name="name" required />
                 </label>
             
         <h2>Number</h2>
                 <label>
-                   <input onChange={this.handleInputChange} value={this.state.number} type="tel" name="number" required /> 
+                   <input onChange={handleInputChangeNumber} value={number} type="tel" name="number" required /> 
             </label>
             
         <button type="submit">Add conact</button>
@@ -45,5 +44,7 @@ export default class ContactForm extends Component {
         
         </div>
         )
-    }
+    
 }
+
+export default ContactForm;
