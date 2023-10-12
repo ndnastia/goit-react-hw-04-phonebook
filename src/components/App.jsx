@@ -52,7 +52,8 @@ const parsedContacts = JSON.parse(stringifiedContacts) ?? [];
   };
 
   const handleContactDelete = (id) => {
-    setContacts((prevState) => prevState.contacts.filter(contact => contact.id !== id))
+    console.log(contacts);
+    setContacts((prevContacts) => prevContacts.filter(contact => contact.id !== id))
   };
 
   const handleFilterChange = event => {
